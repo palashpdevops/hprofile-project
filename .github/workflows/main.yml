@@ -1,4 +1,4 @@
-name: hprofile Actions
+name: hprofile App Actions
 on: workflow_dispatch
 env:
   AWS_REGION: ap-southeast-1
