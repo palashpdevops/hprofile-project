@@ -1,5 +1,7 @@
 name: hprofile Actions
 on: workflow_dispatch
+env:
+  AWS_REGION: ap-southeast-1
 jobs:
   Testing:
       runs-on: ubuntu-latest
@@ -15,5 +17,25 @@ jobs:
 
         - name: Checkstyle
           run: mvn checkstyle:checkstyle
-          
+  Build_Publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Build and upload image to ECR  
+        uses: docker://ghcr.io/kciter/aws-ecr-action:latest
+        with:
+          access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          account_id: ${{ secrets.AWS_ACCOUNT_ID }}
+          repo: actrepo
+          region: ${{ env.AWS_REGION }}
+          tags: latest,${{ github.sha }}
+          create_repo: true
+          image_scanning_configuration: true
+          set_repo_policy: true
+          repo_policy_file: repo-policy.json
+        
+  
   
