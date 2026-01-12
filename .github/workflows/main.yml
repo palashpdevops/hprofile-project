@@ -35,7 +35,6 @@ jobs:
           tags: "latest,${{ github.run_number }}"
           repo: actionsapp
           region: ${{ env.AWS_REGION }}
-          auto_tag: true
           daemon_off: false
           dockerfile: ./Dockerfile
           context: ./
