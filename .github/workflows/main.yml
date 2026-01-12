@@ -6,4 +6,14 @@ jobs:
       steps:
         - name: Testing workflow
           run: echo "Workflow works!"
+          
+        - name: Checkout Code
+          uses: actions/checkout@v4
+
+        - name: Maven Test
+          run: mvn test
+
+        - name: Checkstyle
+          run: mvn checkstyle:checkstyle
+          
   
